@@ -1,56 +1,68 @@
 \c designer_resourcing;
 
-INSERT INTO designers
-(name, title, hourly_rate)
+INSERT INTO resources
+(name, title, hourly_rate, slack_username)
 VALUES
-('Genoveva Schaden', 'designer', '100'),
-('Horacio Boehm', 'senior designer', '100'),
-('Kamryn Schowalter', 'design director', '100'),
-('Kathlyn Bruen', 'art director', '100'),
-('Dolores Lueilwitz', 'creative director', '100'),
-('Felix Hilpert', 'executive creative director', '100'),
-('Godfrey Tillman', 'designer', '100'),
-('Macey Cronin', 'designer', '100'),
-('Lola Yundt', 'designer', '100'),
-('Jonathan Batz', 'designer', '100'),
-('Shyann Runte', 'designer', '100'),
-('Dayton Kshlerin', 'designer', '100'),
-('Mellie Hahn', 'designer', '100');
+('Genoveva Schaden', 'designer', '100', '@resource_username'),
+('Horacio Boehm', 'senior designer', '100', '@resource_username'),
+('Kamryn Schowalter', 'design director', '100', '@resource_username'),
+('Kathlyn Bruen', 'art director', '100', '@resource_username'),
+('Dolores Lueilwitz', 'creative director', '100', '@resource_username'),
+('Felix Hilpert', 'executive creative director', '100', '@resource_username'),
+('Godfrey Tillman', 'designer', '100', '@resource_username'),
+('Macey Cronin', 'designer', '100', '@resource_username'),
+('Lola Yundt', 'designer', '100', '@resource_username'),
+('Jonathan Batz', 'designer', '100', '@resource_username'),
+('Shyann Runte', 'designer', '100', '@resource_username'),
+('Dayton Kshlerin', 'designer', '100', '@resource_username'),
+('Mellie Hahn', 'designer', '100', '@resource_username');
 
-INSERT INTO client_services
-(name)
+INSERT INTO client_leads
+(name, slack_username)
 VALUES
-('Eudora Welch'),
-('Violet Miller'),
-('Velma Kerluke'),
-('Zachery Ward'),
-('Alison Mraz');
+('Eudora Welch', '@cs_username'),
+('Violet Miller', '@cs_username'),
+('Velma Kerluke', '@cs_username'),
+('Zachery Ward', '@cs_username'),
+('Alison Mraz', '@cs_username');
 
 INSERT INTO projects
-(client_name, starting_budget, created)
+(client_name, starting_budget, created, cs_id)
 VALUES
-('Rice and Sons', 250000, '20180512'),
-('Harvey - MacGyver', 50000, '20180512'),
-('Eichmann LLC', 520000, '20180512'),
-('Prosacco LLC', 150000, '20180512'),
-('Klocko Group', 250000, '20180512'),
-('Grady LLC', 250000, '20180512'),
-('Maggio - Kuhn', 250000, '20180512'),
-('Carter, Olson and Mann', 250000, '20180512');
+('Rice and Sons', 250000, '20180512', '1'),
+('Harvey - MacGyver', 50000, '20180512', '1'),
+('Eichmann LLC', 520000, '20180512', '2'),
+('Prosacco LLC', 150000, '20180512', '3'),
+('Klocko Group', 250000, '20180512', '1'),
+('Grady LLC', 250000, '20180512', '1'),
+('Maggio - Kuhn', 250000, '20180512', '2'),
+('Carter, Olson and Mann', 250000, '20180512', '1');
 
-INSERT INTO weeks
-(week_date, designer_id, cs_id, project_id, monday, tuesday, wednesday, thursday, friday)
+INSERT INTO assignments
+(resource_id, project_id, day, hours)
 VALUES
-('20180319', 1, 2, 1, 4, 4, 4, 4, 4),
-('20180319', 2, 2, 2, 5.97, 5.97, 5.98, 7.14, 7.14),
-('20180319', 3, 1, 1, 8, 8, 0, 0, 0),
-('20180319', 3, 2, 3, 0, 0, 6, 2, 2),
-('20180319', 3, 2, 2, 2.25, 2, 2.25, 2.25, 2.25),
-('20180319', 4, 5, 4, 4, 6, 6, 6, 6),
-('20180319', 4, 2, 2, 2.25, 2, 2.25, 2.25, 2.25),
-('20180319', 5, 4, 5, 1, 1, 1, 1, 1),
-('20180319', 5, 4, 6, 4, 4, 4, 4, 4),
-('20180319', 6, 3, 1, 4, 4, 4, 4, 4),
-('20180319', 6, 2, 7, 4, 4, 4, 4, 4),
-('20180319', 7, 2, 1, 4, 4, 4, 4, 4),
-('20180319', 7, 1, 8, 4, 4, 4, 4, 4);
+(4, 3, '2018-03-19', 6),
+(4, 3, '2018-03-20', 6),
+(4, 3, '2018-03-21', 4),
+(4, 3, '2018-03-22', 4),
+(4, 3, '2018-03-23', 4),
+(8, 6, '2018-03-19', 4),
+(8, 6, '2018-03-20', 4),
+(8, 6, '2018-03-21', 6),
+(8, 6, '2018-03-22', 0),
+(8, 6, '2018-03-23', 0),
+(8, 8, '2018-03-19', 2),
+(8, 8, '2018-03-20', 2),
+(8, 8, '2018-03-21', 0),
+(8, 8, '2018-03-22', 6),
+(8, 8, '2018-03-23', 6),
+(2, 3, '2018-03-19', 4),
+(2, 3, '2018-03-20', 4),
+(2, 3, '2018-03-21', 4),
+(2, 3, '2018-03-22', 4),
+(2, 3, '2018-03-23', 4),
+(2, 5, '2018-03-19', 4),
+(2, 5, '2018-03-20', 4),
+(2, 5, '2018-03-21', 4),
+(2, 5, '2018-03-22', 2),
+(2, 5, '2018-03-23', 6);

@@ -2,41 +2,40 @@ CREATE DATABASE designer_resourcing;
 
 \c designer_resourcing;
 
-DROP TABLE designers, client_services, projects, weeks;
+DROP TABLE resources CASCADE;
+DROP TABLE client_leads CASCADE;
+DROP TABLE projects CASCADE;
+DROP TABLE assignments CASCADE;
 
-CREATE TABLE designers (
+CREATE TABLE resources (
   id BIGSERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  hourly_rate INTEGER NOT NULL,
   slack_username VARCHAR(255),
-  title VARCHAR(255),
-  hourly_rate INTEGER
+  archived BOOLEAN DEFAULT false
 );
 
-CREATE TABLE client_services (
+CREATE TABLE client_leads (
   id BIGSERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL
+  name VARCHAR(255) NOT NULL,
+  slack_username VARCHAR(255) NOT NULL,
+  archived BOOLEAN DEFAULT false
 );
 
 CREATE TABLE projects (
   id BIGSERIAL PRIMARY KEY,
   client_name VARCHAR(255) NOT NULL,
-  starting_budget INTEGER,
-  created DATE NOT NULL
+  starting_budget INTEGER NOT NULL,
+  created DATE NOT NULL,
+  cs_id INTEGER REFERENCES client_leads(id),
+  archived BOOLEAN DEFAULT false
 );
 
-CREATE TABLE weeks (
+CREATE TABLE assignments (
   id BIGSERIAL PRIMARY KEY,
-  week_date DATE NOT NULL,
-  designer_id INTEGER NOT NULL,
-  cs_id INTEGER NOT NULL,
-  project_id INTEGER NOT NULL,
-  monday NUMERIC,
-  tuesday NUMERIC,
-  wednesday NUMERIC,
-  thursday NUMERIC,
-  friday NUMERIC
+  resource_id INTEGER REFERENCES resources(id),
+  project_id INTEGER REFERENCES projects(id),
+  day DATE NOT NULL,
+  hours INTEGER NOT NULL
 );
-
-ALTER TABLE weeks ADD CONSTRAINT weeks_fk0 FOREIGN KEY (designer_id) REFERENCES designers(id);
-ALTER TABLE weeks ADD CONSTRAINT weeks_fk1 FOREIGN KEY (cs_id) REFERENCES client_services(id);
-ALTER TABLE weeks ADD CONSTRAINT weeks_fk2 FOREIGN KEY (project_id) REFERENCES projects(id);

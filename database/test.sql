@@ -1,4 +1,1 @@
-SELECT * FROM weeks JOIN designers ON weeks.designer_id = designers.id WHERE designers.name = 'Kamryn Schowalter';
-
-SELECT * FROM weeks JOIN projects ON weeks.project_id = projects.id WHERE client_name = 'Harvey - MacGyver';
-
+SELECT resources.name AS resource, client_leads.name AS client_lead, projects.client_name AS client, assignments.day, assignments.hours FROM assignments JOIN projects ON assignments.project_id = projects.id JOIN resources ON assignments.resource_id = resources.id JOIN client_leads ON projects.cs_id = client_leads.id WHERE resource_id = 4;
