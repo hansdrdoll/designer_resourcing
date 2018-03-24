@@ -84,11 +84,23 @@ app.route('/projects')
     Projects.findAll()
       .then(projects =>
         ClientLeads.findAll()
-        .then(clientLeads =>
-        response.render('projects', { projects, clientLeads })));
+          .then(clientLeads =>
+            response.render('projects', { projects, clientLeads })));
   })
   // add a new project
-  .post((request, response) => {});
+  .post((request, response) => {
+    const projectData = request.body;
+    console.log(projectData)
+    Projects.create(projectData)
+      .then(newProjectId =>
+        Projects.findAll()
+          .then(projects =>
+            ClientLeads.findAll()
+              .then(clientLeads =>
+                Projects.findOne(newProjectId)
+                  .then(newProject =>
+                    response.render('projects', { projects, clientLeads, newProject })))));
+  });
 
 app.route('/projects/:id')
   .get((request, response) => {
