@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Resources</title>
+  <title>Projects</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/stylesheets/reset.css">
@@ -14,9 +14,9 @@
     <div class="uk-navbar-left">
           <ul class="uk-navbar-nav">
             <li class="uk-navbar-item"><a href="/">Main</a></li>
-            <li class="uk-active"><a href="/resources">Resources</a></li>
+            <li class="uk-navbar-item"><a href="/resources">Resources</a></li>
             <li class="uk-navbar-item"><a href="/client-leads">Client Leads</a></li>
-            <li class="uk-navbar-item"><a href="/projects">Projects</a></li>
+            <li class="uk-active"><a href="/projects">Projects</a></li>
         </ul>
     </div>
   </nav>
@@ -24,37 +24,42 @@
   <main class="uk-margin-left uk-margin-right uk-margin-top uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-flex-around" uk-grid>
     <div>
      <h2 class="uk-heading-line uk-text-left">
-      <span>Add Resource</span>
+      <span>Add Project</span>
     </h2>
-    <form>
+    <form action="/projects" method="post">
       <fieldset class="uk-form-stacked">
-      <input type="text" class="uk-input" placeholder="Name">
-      <select name="title" class="uk-select">
-        <option>Designer</option>
-        <option>Senior Designer</option>
-        <option>Design Director</option>
-        <option>Art Director</option>
-        <option>Creative Director</option>
-        <option>Executive Creative Director</option>
+      <input type="text" name="client_name" class="uk-input" placeholder="Client Name">
+      <select name="cs_id" class="uk-select">
+        <option disabled selected>Client Lead</option>
+        <% clientLeads.forEach(clientLead => { %>
+        <option value="<%= clientLead.id %>"><%= clientLead.name %></option>
+        <% }) %>
       </select>
-      <input type="text" class="uk-input" placeholder="Hourly Rate">
+      <input type="text" name="starting_budget" class="uk-input" placeholder="Starting Budget">
       </fieldset>
-      <input type="submit" value="submit" class="uk-button uk-button-primary uk-button-small">
+      <input id="date" type="hidden" name="created">
+      <input type="submit" value="create" class="uk-button uk-button-primary uk-button-small">
       <input type="reset" value="reset" class="uk-button uk-button-small">
     </form>
     </div>
   <div class="uk-text-right">
     <h2 class="uk-heading-line uk-text-right">
-      <span>Edit Resources</span>
+      <span>Edit Projects</span>
     </h2>
-    <% resources.forEach(resource => { %>
+    <% projects.forEach(project => { %>
     <!-- <div> -->
     <a class="uk-width-1-1 uk-button uk-button-default uk-button-small">
-     <%= resource.name %><br><span class="uk-text-muted"><%= resource.title %></span></a>
+     <%= project.client_name %><br><span class="uk-text-muted"><%= project.name %></span></a>
     <% }) %>
   <!-- </div> -->
 </main>
 <script src="/uikit/js/uikit-icons.min.js"></script>
 <script src="/uikit/js/uikit.min.js"></script>
+<script src="/moment/moment.min.js"></script>
+<script>
+  let today = moment().format('YYYY-MM-DD');
+  let createdInput = document.querySelector('#date');
+  createdInput.value = today;
+</script>
 </body>
 </html>

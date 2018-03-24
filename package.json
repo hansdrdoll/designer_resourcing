@@ -22,7 +22,9 @@
     "express": "^4.16.3",
     "helmet": "^3.12.0",
     "method-override": "^2.3.10",
-    "pg-promise": "^8.2.2"
+    "moment": "^2.21.0",
+    "pg-promise": "^8.2.2",
+    "uikit": "^3.0.0-beta.40"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^12.1.0",
