@@ -24,34 +24,37 @@
   <main class="uk-margin-left uk-margin-right uk-margin-top uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-flex-around" uk-grid>
     <div>
      <h2 class="uk-heading-line uk-text-left">
-      <span>Add Project</span>
+      <span>Edit Project</span>
     </h2>
     <form action="/projects" method="post">
       <fieldset class="uk-form-stacked">
-      <input type="text" name="client_name" class="uk-input" placeholder="Client Name">
+
+      <input type="text" name="client_name" class="uk-input" value="<%= thisProject.client_name %>">
       <select name="cs_id" class="uk-select">
-        <option disabled selected>Client Lead</option>
         <% clientLeads.forEach(clientLead => { %>
+          <% if (clientLead.id == thisProject.cs_id) { %>
+          <option value="<%= thisProject.cs_id %>" selected>
+          <%= clientLead.name %>
+          </option>
+          <% } %>
         <option value="<%= clientLead.id %>"><%= clientLead.name %></option>
         <% }) %>
       </select>
-      <input type="text" name="starting_budget" class="uk-input" placeholder="Starting Budget">
+      <input type="text" name="starting_budget" class="uk-input" value="<%= thisProject.starting_budget %>">
+
       </fieldset>
-      <input id="date" type="hidden" name="created">
-      <input type="submit" value="create" class="uk-button uk-button-primary uk-button-small">
-      <input type="reset" value="reset" class="uk-button uk-button-small">
+      <input type="submit" value="Edit" class="uk-button uk-button-primary uk-button-small">
+      <a href="/projects" class="uk-margin-left uk-button uk-button-text uk-button-small">Cancel</a>
     </form>
-      <% if (newProject) { %>
-        <h3 class="uk-heading-bullet">Created <%= newProject.client_name %></h3>
-      <% } %>
+
     </div>
   <div class="uk-text-right">
     <h2 class="uk-heading-line uk-text-right">
-      <span>Edit Projects</span>
+      <span>Projects</span>
     </h2>
-    <% projects.forEach(project => { %>
-    <a href="/projects/<%= project.id %>" class="uk-width-1-1 uk-button uk-button-default uk-button-small">
-     <%= project.client_name %><br><span class="uk-text-muted"><%= project.name %></span></a>
+    <% projects.forEach(thoseProject => { %>
+    <a href="/projects/<%= thoseProject.id %>" class="uk-width-1-1 uk-button uk-button-default uk-button-small">
+     <%= thoseProject.client_name %><br><span class="uk-text-muted"><%= thoseProject.name %></span></a>
     <% }) %>
 </main>
 <script src="/uikit/js/uikit-icons.min.js"></script>

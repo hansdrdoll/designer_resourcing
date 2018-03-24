@@ -3,19 +3,19 @@
 INSERT INTO resources
 (name, title, hourly_rate, slack_username)
 VALUES
-('Genoveva Schaden', 'designer', '100', '@resource_username'),
-('Horacio Boehm', 'senior designer', '100', '@resource_username'),
-('Kamryn Schowalter', 'design director', '100', '@resource_username'),
-('Kathlyn Bruen', 'art director', '100', '@resource_username'),
-('Dolores Lueilwitz', 'creative director', '100', '@resource_username'),
-('Felix Hilpert', 'executive creative director', '100', '@resource_username'),
-('Godfrey Tillman', 'designer', '100', '@resource_username'),
-('Macey Cronin', 'designer', '100', '@resource_username'),
-('Lola Yundt', 'designer', '100', '@resource_username'),
-('Jonathan Batz', 'designer', '100', '@resource_username'),
-('Shyann Runte', 'designer', '100', '@resource_username'),
-('Dayton Kshlerin', 'designer', '100', '@resource_username'),
-('Mellie Hahn', 'designer', '100', '@resource_username');
+('Genoveva Schaden', 'Designer', '100', '@resource_username'),
+('Horacio Boehm', 'Senior Designer', '100', '@resource_username'),
+('Kamryn Schowalter', 'Design Director', '100', '@resource_username'),
+('Kathlyn Bruen', 'Art Director', '100', '@resource_username'),
+('Dolores Lueilwitz', 'Creative Director', '100', '@resource_username'),
+('Felix Hilpert', 'Executive Creative Director', '100', '@resource_username'),
+('Godfrey Tillman', 'Designer', '100', '@resource_username'),
+('Macey Cronin', 'Designer', '100', '@resource_username'),
+('Lola Yundt', 'Designer', '100', '@resource_username'),
+('Jonathan Batz', 'Designer', '100', '@resource_username'),
+('Shyann Runte', 'Designer', '100', '@resource_username'),
+('Dayton Kshlerin', 'Designer', '100', '@resource_username'),
+('Mellie Hahn', 'Designer', '100', '@resource_username');
 
 INSERT INTO client_leads
 (name, slack_username)

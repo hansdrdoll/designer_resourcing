@@ -24,21 +24,39 @@
   <main class="uk-margin-left uk-margin-right uk-margin-top uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-flex-around" uk-grid>
     <div>
      <h2 class="uk-heading-line uk-text-left">
-      <span>Add Resource</span>
+      <span>Edit Resource</span>
     </h2>
     <form action="/resources" method="post">
       <fieldset class="uk-form-stacked">
-      <input type="text" name="name" class="uk-input" placeholder="Name">
+      <input type="text" name="name" class="uk-input" value="<%= resource.name %>">
       <select name="title" class="uk-select">
+        <% if (resource.title == "Designer") { %>
+          <option value="Designer" selected>Designer</option>
+        <% } %>
         <option value="Designer">Designer</option>
+        <% if (resource.title == "Senior Designer") { %>
+          <option value="Senior Designer" selected>Senior Designer</option>
+        <% } %>
         <option value="Senior Designer">Senior Designer</option>
+        <% if (resource.title == "Design Director") { %>
+          <option value="Design Director" selected>Design Director</option>
+        <% } %>
         <option value="Design Director">Design Director</option>
+        <% if (resource.title == "Art Director") { %>
+          <option value="Art Director" selected>Art Director</option>
+        <% } %>
         <option value="Art Director">Art Director</option>
+        <% if (resource.title == "Creative Director") { %>
+          <option value="Creative Director" selected>Creative Director</option>
+        <% } %>
         <option value="Creative Director">Creative Director</option>
+        <% if (resource.title == "Executive Creative Director") { %>
+          <option value="Executive Creative Director" selected>Executive Creative Director</option>
+        <% } %>
         <option value="Executive Creative Director">Executive Creative Director</option>
       </select>
-      <input type="text" name="hourly_rate" class="uk-input" placeholder="Hourly Rate">
-      <input type="text" name="slack_username" class="uk-input" placeholder="Slack username">
+      <input type="text" name="hourly_rate" class="uk-input" value="<%= resource.hourly_rate %>">
+      <input type="text" name="slack_username" class="uk-input" value="<%= resource.slack_username %>">
       </fieldset>
       <input type="submit" value="submit" class="uk-button uk-button-primary uk-button-small">
       <input type="reset" value="reset" class="uk-button uk-button-small">

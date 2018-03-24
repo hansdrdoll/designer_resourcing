@@ -36,17 +36,31 @@ app.route('/resources')
   .get((request, response) => {
     // show all resources
     Resource.findAll()
-      .then(resources => response.render('resources', { resources }));
+      .then(allResources =>
+        response.render('resources', { resources: allResources, newResource: '' }));
   })
   .post((request, response) => {
     // add a new resource
+    const resourceData = request.body;
+    Resource.create(resourceData)
+      .then(newId =>
+        Resource.findAll()
+          .then(resources =>
+            Resource.findOne(newId)
+              .then(newResource =>
+                response.render('resources', { resources, newResource }))));
   });
 
 app
   .route('/resources/:id')
   // show a specific resource
   .get((request, response) => {
-    //
+    const resourceId = { id: request.params.id };
+    Resource.findAll()
+      .then(resources =>
+        Resource.findOne(resourceId)
+          .then(resource =>
+            response.render('resource', { resources, resource, newResource: '' })));
   })
   .put((request, response) => {})
   .delete((request, response) => {});
@@ -85,31 +99,36 @@ app.route('/projects')
       .then(projects =>
         ClientLeads.findAll()
           .then(clientLeads =>
-            response.render('projects', { projects, clientLeads })));
+            response.render('projects', { projects, clientLeads, newProject: '' })));
   })
   // add a new project
   .post((request, response) => {
     const projectData = request.body;
-    console.log(projectData)
     Projects.create(projectData)
-      .then(newProjectId =>
+      .then(projectId =>
         Projects.findAll()
           .then(projects =>
             ClientLeads.findAll()
               .then(clientLeads =>
-                Projects.findOne(newProjectId)
+                Projects.findOne(projectId)
                   .then(newProject =>
                     response.render('projects', { projects, clientLeads, newProject })))));
   });
 
 app.route('/projects/:id')
   .get((request, response) => {
-  // show a specific project
-  })
+    const projectId = { id: request.params.id };
+    Projects.findAll()
+      .then(projects =>
+        ClientLeads.findAll()
+          .then(clientLeads =>
+            Projects.findOne(projectId)
+              .then(thisProject =>
+                response.render('project', { projects, clientLeads, thisProject }))))})
   .put((request, response) => {
     // update a project
   })
-  .delete((request, response) => {});
+  .delete((request, response) => {})
 
 app.get('/projects/:id/edit', (request, response) => {
   // show the edit project view
