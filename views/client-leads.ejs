@@ -44,7 +44,7 @@
       <span>Edit Client Leads</span>
     </h2>
     <% clientLeads.forEach(lead => { %>
-    <a class="uk-width-1-1 uk-button uk-button-default uk-button-small">
+    <a href="/client-leads/<%= lead.id %>" class="uk-width-1-1 uk-button uk-button-default uk-button-small">
      <%= lead.name %></a>
     <% }) %>
 </main>

@@ -31,12 +31,13 @@
      <h2 class="uk-heading-line uk-text-left">
       <span>Add Client Lead</span>
     </h2>
-    <form>
+    <form action="/client-leads/<%= clientLead.id %>?_method=put" method="post">
       <fieldset class="uk-form-stacked">
-      <input type="text" class="uk-input" placeholder="Name">
+      <input type="text" name="name" class="uk-input" value="<%= clientLead.name %>">
+      <input type="text" name="slack_username" class="uk-input" value="<%= clientLead.slack_username %>">
       </fieldset>
       <input type="submit" value="submit" class="uk-button uk-button-primary uk-button-small">
-      <input type="reset" value="reset" class="uk-button uk-button-small">
+      <a href="/client-leads" class="uk-margin-left uk-button uk-button-text uk-button-small">Cancel</a>
     </form>
     </div>
   <div class="uk-text-right">
@@ -44,7 +45,7 @@
       <span>Edit Client Leads</span>
     </h2>
     <% clientLeads.forEach(lead => { %>
-    <a class="uk-width-1-1 uk-button uk-button-default uk-button-small">
+    <a href="/client-leads/<%= lead.id %>" class="uk-width-1-1 uk-button uk-button-default uk-button-small">
      <%= lead.name %></a>
     <% }) %>
 </main>

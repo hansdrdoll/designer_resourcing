@@ -3,7 +3,7 @@ const db = require('../database/connection');
 const Resource = {};
 
 Resource.findAll = () => {
-  return db.any('SELECT * FROM resources');
+  return db.any('SELECT * FROM resources WHERE archived = false');
 };
 
 Resource.create = (resourceData) => {
@@ -13,5 +13,13 @@ Resource.create = (resourceData) => {
 Resource.findOne = (resourceId) => {
   return db.one('SELECT * from resources WHERE id = $1', resourceId.id);
 };
+
+Resource.update = (resourceData, resourceId) => {
+  return db.result('UPDATE resources SET name = $1, title = $2, hourly_rate = $3, slack_username = $4 WHERE id = $5', [resourceData.name, resourceData.title, resourceData.hourly_rate, resourceData.slack_username, resourceId.id])
+}
+
+Resource.delete = (resourceId) => {
+  return db.result('UPDATE resources SET archived = true WHERE id = $1', resourceId.id)
+}
 
 module.exports = Resource;

@@ -62,35 +62,66 @@ app
           .then(resource =>
             response.render('resource', { resources, resource, newResource: '' })));
   })
-  .put((request, response) => {})
-  .delete((request, response) => {});
-
-app.get('/resources/:id/edit', (request, response) => {
-  // show the edit resource view
-});
+  .put((request, response) => {
+    const resourceId = { id: request.params.id };
+    const resourceData = request.body;
+    Resource.update(resourceData, resourceId)
+      .then(result =>
+        Resource.findAll()
+          .then(resources =>
+            Resource.findOne(resourceId)
+              .then(resource => {
+                console.log(result)
+                response.render('resource', { resources, resource, newResource: result })})));
+              }
+  )
+  .delete((request, response) => {
+    const resourceId = { id: request.params.id };
+    Resource.delete(resourceId)
+      .then(response.redirect('/resources'));
+  });
 
 app
   .route('/client-leads')
   // show all clients
   .get((request, response) => {
     ClientLeads.findAll()
-      .then(clientLeads => response.render('client-leads', { clientLeads }));
+      .then(clientLeads => response.render('client-leads', { clientLeads, newClient: '' }));
   })
   // add a new client
-  .post((request, response) => {});
+  .post((request, response) => {
+    const clientData = request.body;
+    ClientLeads.create(clientData)
+      .then(newClientId =>
+        ClientLeads.findAll()
+          .then(clientLeads =>
+            ClientLeads.findOne(newClientId)
+              .then(newClient =>
+                response.render('client-leads', { clientLeads, newClient }))));
+  });
 
 app
   .route('/client-leads/:id')
   // show a specific clientleads
   .get((request, response) => {
-    //
+    const clientId = { id: request.params.id };
+    ClientLeads.findOne(clientId)
+      .then(clientLead =>
+        ClientLeads.findAll()
+          .then(clientLeads =>
+            response.render('client-lead', { clientLeads, clientLead })));
   })
-  .put((request, response) => {})
+  .put((request, response) => {
+    const clientId = { id: request.params.id };
+    const clientInfo = request.body;
+    ClientLeads.update(clientInfo, clientId)
+      .then(ClientLeads.findOne(clientId)
+        .then(clientLead =>
+          ClientLeads.findAll()
+            .then(clientLeads =>
+              response.render('client-lead', { clientLeads, clientLead }))));
+  })
   .delete((request, response) => {});
-
-app.get('/client-leads/:id/edit', (request, response) => {
-  // show the edit client leads view
-});
 
 app.route('/projects')
   // show all projects
