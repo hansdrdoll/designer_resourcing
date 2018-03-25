@@ -14,7 +14,7 @@ Projects.create = (projectData) => {
 };
 
 Projects.findOne = (projectId) => {
-  return db.one('SELECT * FROM projects WHERE id = $1', projectId.id);
+  return db.one('SELECT projects.id, projects.client_name, client_leads.name FROM projects JOIN client_leads on projects.cs_id = client_leads.id WHERE projects.id = $1', projectId.id);
 };
 
 Projects.update = (projectData, projectId) => {

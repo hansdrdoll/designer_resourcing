@@ -12,7 +12,7 @@ Resource.findAny = (ids) => {
   const newIds = [];
   let manySelector = '$1';
   let i = 1;
-  if (ids.length > 1) {
+  if (typeof ids !== 'string') {
     ids.forEach((id) => {
       newIds.push(Number(id));
       if (i < ids.length) {
@@ -25,8 +25,7 @@ Resource.findAny = (ids) => {
       newIds
     );
   } else {
-    newIds.push(Number(ids));
-    return db.any(`SELECT * FROM resources WHERE id = $1`, newIds);
+    return db.any(`SELECT * FROM resources WHERE id = $1`, ids);
   }
 };
 

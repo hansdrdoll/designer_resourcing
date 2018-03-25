@@ -199,20 +199,21 @@ app.route('/assign-resources/project/:id')
 app.route('/assign-resources/week')
   // show a specific assignment
   .get((request, response) => {
-    const resources = request.query.resources;
-    console.log(resources);
+    const reqResources = request.query.resources;
     const monday = request.query.monday;
-    console.log('monday', monday);
-    const project_id = request.query.project_id;
-    console.log('project_id', project_id);
-    // const tues = moment(monday).add(1, 'days').format('YYYY-MM-DD');
-    // const wed = moment(monday).add(2, 'days').format('YYYY-MM-DD');
-    // const thurs = moment(monday).add(3, 'days').format('YYYY-MM-DD');
-    // const fri = moment(monday).add(4, 'days').format('YYYY-MM-DD');
-    // const week = [monday, tues, wed, thurs, fri];
-    Resource.findAny(resources)
-      .then(result =>
-        response.json(result));
+    const project_id = {id: request.query.project_id};
+
+    const tues = moment(monday).add(1, 'days').format('YYYY-MM-DD');
+    const wed = moment(monday).add(2, 'days').format('YYYY-MM-DD');
+    const thurs = moment(monday).add(3, 'days').format('YYYY-MM-DD');
+    const fri = moment(monday).add(4, 'days').format('YYYY-MM-DD');
+    const week = [monday, tues, wed, thurs, fri];
+
+    Resource.findAny(reqResources)
+      .then(resources =>
+        Projects.findOne(project_id)
+          .then(project =>
+            response.render('make-assignments', { resources, project, week })));
   })
   .put((request, response) => {
     // update method
@@ -229,7 +230,8 @@ app.route('/report')
 
   })
   .post((request, response) => {
-    // add assignment to db
+    console.log(request.bod)
+    response.send(request.body);
   });
 
 app.route('/report/:week')

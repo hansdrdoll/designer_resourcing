@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Projects</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/stylesheets/reset.css">
+    <link rel="stylesheet" href="/static/stylesheets/style.css">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css">
+
+</head>
+<body>
+  <nav class="uk-navbar-container" uk-navbar>
+    <div class="uk-navbar-left">
+          <ul class="uk-navbar-nav">
+            <li class="uk-navbar-item"><a href="/report">Report</a></li>
+            <li class="uk-navbar-item uk-active"><a href="/assign-resources">Assign Resources</a></li>
+            <li class="uk-navbar-item"><a href="/projects">Add/Edit Projects</a></li>
+            <li class="uk-navbar-item"><a href="/resources">Edit Staff</a></li>
+            <div uk-dropdown>
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="uk-navbar-item"><a href="/resources">Resources</a></li>
+                <li class="uk-navbar-item"><a href="/client-leads">Client Leads</a></li>
+            </ul>
+          </div>
+        </ul>
+    </div>
+  </nav>
+
+  <main class="uk-flex uk-margin-top uk-flex-center uk-flex-column">
+    <div class="uk-width-1-1">
+      <h3 class="uk-heading-line uk-text-center">
+      <span>Assign Resources to <%= project.client_name %> <span class="uk-text-muted uk-margin-left"><%= project.name %></span></span>
+    </h3>
+
+  </div>
+
+    <form action="/report" method="post" class="js-form">
+  <div class="uk-flex uk-flex-column uk-flex-center uk-margin-right uk-margin-left uk-margin-bottom">
+
+    <table class="uk-table uk-table-striped uk-table-small uk-table-middle">
+      <thead>
+      <tr>
+        <td class="uk-width-medium">Resource</td>
+        <td class="uk-width-small">Mon</td>
+        <td class="uk-width-small">Tue</td>
+        <td class="uk-width-small">Wed</td>
+        <td class="uk-width-small">Thurs</td>
+        <td class="uk-width-small">Fri</td>
+        <!-- <td class="uk-width-small"> </td> -->
+    </tr>
+  </thead>
+  <tbody>
+      <% resources.forEach(resource => { %>
+    <tr>
+      <td class="">
+        <span><%= resource.name %></span><br><span class="uk-text-muted uk-text-small"><%= resource.title %></span>
+
+      </td>
+          <% week.forEach(day => { %>
+        <td>
+
+          <input type="text" id ="<%= day %>,<%= resource.id %>,<%= project.id %>" placeholder="hrs" class="hours uk-input uk-form-width-xsmall uk-width-1-5">
+
+        </td>
+          <% }) %>
+        <!-- <td>
+          <input type="text" class="total uk-disabled uk-input uk-form-width-xsmall" id="<%= resource.id %>" value="0">
+        </td> -->
+    </tr>
+      <% }) %>
+    </tbody>
+
+  </table>
+  <div>
+    <input type="submit" value="Submit" class="uk-button uk-button-primary uk-margin-top js-submit">
+    <a href="/assign-resources" class="uk-margin-left uk-margin-top uk-button-text uk-button">Cancel</a>
+  </div>
+  </form>
+</main>
+<!-- <script src="/uikit/js/uikit-icons.min.js"></script> -->
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/moment/moment.min.js"></script>
+<script src="/static/scripts/make-assignments.js"></script>
+<!-- <script>
+const monday = moment().day('Monday').format('YYYY-MM-DD');
+const thisMondayOption = document.querySelector('#thisMonday');
+thisMondayOption.textContent = monday;
+
+const nextMonday = moment(monday).add(1, 'week').format('YYYY-MM-DD');
+const nextWeekOption = document.querySelector('#nextWeek');
+nextWeekOption.textContent = nextMonday;
+
+const mondayAfterNext = moment(monday).add(2, 'week').format('YYYY-MM-DD');
+const weekAfterNextOption = document.querySelector('#weekAfter');
+weekAfterNextOption.textContent = mondayAfterNext;
+
+const dateList = document.querySelector('.js-date-selector');
+for (let i = 1; i < 8; i++) {
+  let newOption = document.createElement('option');
+  let newDate = moment(monday).subtract(i, 'weeks').format('YYYY-MM-DD');
+  newOption.textContent = newDate;
+  dateList.appendChild(newOption);
+}
+thisMonday.selected = 'selected';
+</script> -->
+</body>
+</html>
