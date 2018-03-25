@@ -13,10 +13,16 @@
   <nav class="uk-navbar-container" uk-navbar>
     <div class="uk-navbar-left">
           <ul class="uk-navbar-nav">
-            <li class="uk-navbar-item"><a href="/">Report</a></li>
-            <li class="uk-navbar-item"><a href="/resources">Resources</a></li>
-            <li class="uk-navbar-item"><a href="/client-leads">Client Leads</a></li>
-            <li class="uk-active"><a href="/projects">Projects</a></li>
+            <li class="uk-navbar-item"><a href="/report">Report</a></li>
+            <li class="uk-navbar-item"><a href="/assign-resources">Assign Resources</a></li>
+            <li class="uk-navbar-item uk-active"><a href="/projects">Add/Edit Projects</a></li>
+            <li class="uk-navbar-item"><a href="/resources">Edit Staff</a></li>
+            <div uk-dropdown>
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="uk-navbar-item"><a href="/resources">Resources</a></li>
+                <li class="uk-navbar-item"><a href="/client-leads">Client Leads</a></li>
+            </ul>
+          </div>
         </ul>
     </div>
   </nav>

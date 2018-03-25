@@ -9,13 +9,14 @@
     <link rel="stylesheet" href="/uikit/css/uikit.min.css">
 </head>
 <body>
+
   <nav class="uk-navbar-container" uk-navbar>
     <div class="uk-navbar-left">
           <ul class="uk-navbar-nav">
             <li class="uk-navbar-item"><a href="/report">Report</a></li>
             <li class="uk-navbar-item"><a href="/assign-resources">Assign Resources</a></li>
             <li class="uk-navbar-item"><a href="/projects">Add/Edit Projects</a></li>
-            <li class="uk-navbar-item"><a href="/resources">Edit Staff</a></li>
+            <li class="uk-navbar-item uk-active"><a href="/resources">Edit Staff</a></li>
             <div uk-dropdown>
               <ul class="uk-nav uk-dropdown-nav">
                 <li class="uk-navbar-item"><a href="/resources">Resources</a></li>
@@ -31,9 +32,10 @@
      <h2 class="uk-heading-line uk-text-left">
       <span>Add Client Lead</span>
     </h2>
-    <form>
+    <form action="/client-leads" method="post">
       <fieldset class="uk-form-stacked">
-      <input type="text" class="uk-input" placeholder="Name">
+      <input type="text" name="name" class="uk-input" placeholder="Name">
+      <input type="text" name="slack_username" class="uk-input" placeholder="Slack Username">
       </fieldset>
       <input type="submit" value="submit" class="uk-button uk-button-primary uk-button-small">
       <input type="reset" value="reset" class="uk-button uk-button-small">
@@ -45,7 +47,8 @@
     </h2>
     <% clientLeads.forEach(lead => { %>
     <a href="/client-leads/<%= lead.id %>" class="uk-width-1-1 uk-button uk-button-default uk-button-small">
-     <%= lead.name %></a>
+     <%= lead.name %>
+     </a>
     <% }) %>
 </main>
 <script src="/uikit/js/uikit-icons.min.js"></script>

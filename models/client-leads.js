@@ -3,7 +3,7 @@ const db = require('../database/connection');
 const ClientLeads = {};
 
 ClientLeads.findAll = () => {
-  return db.any('SELECT * FROM client_leads');
+  return db.any('SELECT * FROM client_leads WHERE archived = false ORDER BY id');
 };
 
 ClientLeads.create = (clientData) => {
@@ -15,7 +15,11 @@ ClientLeads.findOne = (clientId) => {
 };
 
 ClientLeads.update = (clientInfo, clientId) => {
-  return db.one('UPDATE client_leads SET name = $1, slack_username = $2 WHERE id = $3', [clientInfo.name, clientInfo.slack_username, clientId.id])
-}
+  return db.one('UPDATE client_leads SET name = $1, slack_username = $2 WHERE id = $3', [clientInfo.name, clientInfo.slack_username, clientId.id]);
+};
+
+ClientLeads.delete = (clientId) => {
+  return db.result('UPDATE client_leads SET archived = true WHERE id = $1', clientId.id);
+};
 
 module.exports = ClientLeads;

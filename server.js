@@ -119,9 +119,13 @@ app
         .then(clientLead =>
           ClientLeads.findAll()
             .then(clientLeads =>
-              response.render('client-lead', { clientLeads, clientLead }))));
+              response.render('client-leads', { clientLeads, clientLead }))));
   })
-  .delete((request, response) => {});
+  .delete((request, response) => {
+    const clientId = { id: request.params.id };
+    ClientLeads.delete(clientId)
+      .then(response.redirect('/client-leads'));
+  });
 
 app.route('/projects')
   // show all projects
@@ -155,15 +159,25 @@ app.route('/projects/:id')
           .then(clientLeads =>
             Projects.findOne(projectId)
               .then(thisProject =>
-                response.render('project', { projects, clientLeads, thisProject }))))})
-  .put((request, response) => {
-    // update a project
+                response.render('project', { projects, clientLeads, thisProject }))));
   })
-  .delete((request, response) => {})
-
-app.get('/projects/:id/edit', (request, response) => {
-  // show the edit project view
-});
+  .put((request, response) => {
+    const projectId = { id: request.params.id };
+    const projectData = request.body;
+    Projects.update(projectData, projectId)
+      .then(Projects.findAll()
+        .then(projects =>
+          ClientLeads.findAll()
+            .then(clientLeads =>
+              Projects.findOne(projectId)
+                .then(thisProject =>
+                  response.render('project', { projects, clientLeads, thisProject })))));
+  })
+  .delete((request, response) => {
+    const projectId = { id: request.params.id };
+    Projects.delete(projectId)
+      .then(response.redirect('/projects'));
+  });
 
 app.route('/assign-resources')
   .get((request, response) => {

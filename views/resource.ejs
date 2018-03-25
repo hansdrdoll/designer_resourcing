@@ -13,10 +13,16 @@
   <nav class="uk-navbar-container" uk-navbar>
     <div class="uk-navbar-left">
           <ul class="uk-navbar-nav">
-            <li class="uk-navbar-item"><a href="/">Report</a></li>
-            <li class="uk-active"><a href="/resources">Resources</a></li>
-            <li class="uk-navbar-item"><a href="/client-leads">Client Leads</a></li>
-            <li class="uk-navbar-item"><a href="/projects">Projects</a></li>
+            <li class="uk-navbar-item"><a href="/report">Report</a></li>
+            <li class="uk-navbar-item"><a href="/assign-resources">Assign Resources</a></li>
+            <li class="uk-navbar-item"><a href="/projects">Add/Edit Projects</a></li>
+            <li class="uk-navbar-item uk-active"><a href="/resources">Edit Staff</a></li>
+            <div uk-dropdown>
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="uk-navbar-item"><a href="/resources">Resources</a></li>
+                <li class="uk-navbar-item"><a href="/client-leads">Client Leads</a></li>
+            </ul>
+          </div>
         </ul>
     </div>
   </nav>
@@ -28,7 +34,9 @@
     </h2>
     <form action="/resources/<%= resource.id %>?_method=put" method="post">
       <fieldset class="uk-form-stacked">
+      <label for="name" class="uk-form-label">Name</label>
       <input type="text" name="name" class="uk-input" value="<%= resource.name %>">
+      <label for="title" class="uk-form-label uk-margin-top">Title</label>
       <select name="title" class="uk-select">
         <% if (resource.title == "Designer") { %>
           <option value="Designer" selected>Designer</option>
@@ -55,7 +63,9 @@
         <% } %>
         <option value="Executive Creative Director">Executive Creative Director</option>
       </select>
+      <label for="hourly_rate" class="uk-form-label uk-margin-top">Hourly Rate</label>
       <input type="text" name="hourly_rate" class="uk-input" value="<%= resource.hourly_rate %>">
+      <label for="slack_username" class="uk-form-label uk-margin-top">Slack Username</label>
       <input type="text" name="slack_username" class="uk-input" value="<%= resource.slack_username %>">
       </fieldset>
       <input type="submit" value="submit" class="uk-button uk-button-primary uk-button-small">

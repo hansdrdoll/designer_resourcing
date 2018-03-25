@@ -13,10 +13,16 @@
   <nav class="uk-navbar-container" uk-navbar>
     <div class="uk-navbar-left">
           <ul class="uk-navbar-nav">
-            <li class="uk-navbar-item"><a href="/">Report</a></li>
-            <li class="uk-navbar-item"><a href="/resources">Resources</a></li>
-            <li class="uk-navbar-item"><a href="/client-leads">Client Leads</a></li>
-            <li class="uk-active"><a href="/projects">Projects</a></li>
+            <li class="uk-navbar-item"><a href="/report">Report</a></li>
+            <li class="uk-navbar-item"><a href="/assign-resources">Assign Resources</a></li>
+            <li class="uk-navbar-item uk-active"><a href="/projects">Add/Edit Projects</a></li>
+            <li class="uk-navbar-item"><a href="/resources">Edit Staff</a></li>
+            <div uk-dropdown>
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="uk-navbar-item"><a href="/resources">Resources</a></li>
+                <li class="uk-navbar-item"><a href="/client-leads">Client Leads</a></li>
+            </ul>
+          </div>
         </ul>
     </div>
   </nav>
@@ -26,10 +32,11 @@
      <h2 class="uk-heading-line uk-text-left">
       <span>Edit Project</span>
     </h2>
-    <form action="/projects" method="post">
+    <form action="/projects/<%= thisProject.id %>?_method=put" method="post">
       <fieldset class="uk-form-stacked">
-
+      <label for="client_name" class="uk-form-label uk-margin-top">Client Name</label>
       <input type="text" name="client_name" class="uk-input" value="<%= thisProject.client_name %>">
+      <label for="cs_id" class="uk-form-label uk-margin-top">Client Lead</label>
       <select name="cs_id" class="uk-select">
         <% clientLeads.forEach(clientLead => { %>
           <% if (clientLead.id == thisProject.cs_id) { %>
@@ -40,11 +47,16 @@
         <option value="<%= clientLead.id %>"><%= clientLead.name %></option>
         <% }) %>
       </select>
+      <label for="starting_budget" class="uk-form-label uk-margin-top">Budget</label>
       <input type="text" name="starting_budget" class="uk-input" value="<%= thisProject.starting_budget %>">
 
       </fieldset>
       <input type="submit" value="Edit" class="uk-button uk-button-primary uk-button-small">
       <a href="/projects" class="uk-margin-left uk-button uk-button-text uk-button-small">Cancel</a>
+    </form>
+
+    <form action="/projects/<%= thisProject.id %>?_method=delete" method="post" class="uk-margin">
+      <input type="submit" value="Delete" class="uk-button uk-button-danger uk-button-small">
     </form>
 
     </div>

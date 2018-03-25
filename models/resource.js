@@ -3,7 +3,7 @@ const db = require('../database/connection');
 const Resource = {};
 
 Resource.findAll = () => {
-  return db.any('SELECT * FROM resources WHERE archived = false');
+  return db.any('SELECT * FROM resources WHERE archived = false ORDER BY id');
 };
 
 Resource.create = (resourceData) => {
