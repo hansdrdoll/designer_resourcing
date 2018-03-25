@@ -16,7 +16,7 @@ const transmuteIds = (element, index) => {
   HourInputs.push({
     resource_id: infoArr[1],
     project_id: infoArr[2],
-    date: infoArr[0],
+    day: infoArr[0],
     hours: '',
   });
   element.id = index;
@@ -25,13 +25,30 @@ const transmuteIds = (element, index) => {
 
 allInputFields.forEach(transmuteIds);
 
+const gatherAllValues = (element, index) => {
+  let value = element.value;
+  if (value === '') {
+    value = '0';
+  }
+  HourInputs[index].hours = value;
+};
+
+// fun times getting this promise to resolve holy shit
+const sendIt = (data) => fetch('/assign-resources', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(data),
+  }).then(function(response) {
+  return response;
+});
+
 const sendRequest = (evt) => {
   evt.preventDefault();
-
-}
+  allInputFields.forEach(gatherAllValues);
+  sendIt(HourInputs)
+    .then(response => window.location.href = "/assign-resources");
+};
 
 const form = document.querySelector('.js-form');
 
 form.addEventListener('submit', sendRequest);
-
-

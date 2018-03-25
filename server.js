@@ -184,6 +184,8 @@ app.route('/assign-resources')
   })
   .post((request, response) => {
     // add assignment to db
+    Assignments.create(request.body);
+    response.sendStatus(201);
   });
 
 app.route('/assign-resources/project/:id')
@@ -230,8 +232,7 @@ app.route('/report')
 
   })
   .post((request, response) => {
-    console.log(request.bod)
-    response.send(request.body);
+
   });
 
 app.route('/report/:week')
