@@ -3,7 +3,7 @@ const db = require('../database/connection');
 const Projects = {};
 
 Projects.findAll = () => {
-  return db.any('SELECT projects.id, projects.client_name, client_leads.name FROM projects JOIN client_leads on projects.cs_id = client_leads.id WHERE projects.archived = false ORDER BY id');
+  return db.any('SELECT projects.id, projects.client_name, client_leads.name FROM projects JOIN client_leads on projects.cs_id = client_leads.id WHERE projects.archived = false ORDER BY projects.cs_id');
 };
 
 Projects.create = (projectData) => {
@@ -14,7 +14,7 @@ Projects.create = (projectData) => {
 };
 
 Projects.findOne = (projectId) => {
-  return db.one('SELECT * FROM projects WHERE id = $1', Number(projectId.id));
+  return db.one('SELECT * FROM projects WHERE id = $1', projectId.id);
 };
 
 Projects.update = (projectData, projectId) => {

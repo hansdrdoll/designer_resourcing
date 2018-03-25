@@ -5,6 +5,8 @@ const methodOverride = require('method-override');
 const Resource = require('./models/resource');
 const ClientLeads = require('./models/client-leads');
 const Projects = require('./models/projects');
+const Assignments = require('./models/assignments');
+const moment = require('moment');
 
 // const session = require('express-session');
 
@@ -27,9 +29,7 @@ app.listen(PORT, () => {
 });
 
 app.route('/').get((request, response) => {
-  // show main view
-  // response.render('index');
-  response.render('index')
+  response.render('index');
 });
 
 app.route('/resources')
@@ -70,11 +70,9 @@ app
         Resource.findAll()
           .then(resources =>
             Resource.findOne(resourceId)
-              .then(resource => {
-                console.log(result)
-                response.render('resource', { resources, resource, newResource: result })})));
-              }
-  )
+              .then(resource =>
+                response.render('resource', { resources, resource, newResource: result }))));
+  })
   .delete((request, response) => {
     const resourceId = { id: request.params.id };
     Resource.delete(resourceId)
@@ -181,16 +179,37 @@ app.route('/projects/:id')
 
 app.route('/assign-resources')
   .get((request, response) => {
-    // redirect to current week
+    Projects.findAll()
+      .then(projects => response.render('assign-resources-get-project', { projects }));
   })
   .post((request, response) => {
     // add assignment to db
   });
 
-app.route('/assign-resources/:week')
+app.route('/assign-resources/project/:id')
+  .get((request, response) => {
+    const projectId = { id: request.params.id };
+    Resource.findAll()
+      .then(resources =>
+        Projects.findOne(projectId)
+          .then(project =>
+            response.render('assign-resources-get-resources', { resources, project })));
+  });
+
+app.route('/assign-resources/week')
   // show a specific assignment
   .get((request, response) => {
-    // show
+    const designers = request.query.designers;
+    const startingMonday = request.query.monday;
+    const tues = moment(startingMonday).add(1, 'days').format('YYYY-MM-DD');
+    const wed = moment(startingMonday).add(2, 'days').format('YYYY-MM-DD');
+    const thurs = moment(startingMonday).add(3, 'days').format('YYYY-MM-DD');
+    const fri = moment(startingMonday).add(4, 'days').format('YYYY-MM-DD');
+    const week = [startingMonday, tues, wed, thurs, fri];
+    Assignments.findAllInWeek(week)
+      .then(result =>
+        response.json(result));
+    // response.send(`great, ${startingMonday}, ${tues} ${wed} ${thurs}, ${fri}`);
   })
   .put((request, response) => {
     // update method
@@ -202,6 +221,9 @@ app.route('/assign-resources/:week')
 app.route('/report')
   .get((request, response) => {
     // redirect to current week
+    let lastMonday = moment().day('Monday').format('YYYY-MM-DD');
+    response.redirect(`/report/${lastMonday}`);
+
   })
   .post((request, response) => {
     // add assignment to db

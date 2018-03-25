@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Projects</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/stylesheets/reset.css">
+    <link rel="stylesheet" href="/static/stylesheets/style.css">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css">
+
+</head>
+<body>
+  <nav class="uk-navbar-container" uk-navbar>
+    <div class="uk-navbar-left">
+          <ul class="uk-navbar-nav">
+            <li class="uk-navbar-item"><a href="/report">Report</a></li>
+            <li class="uk-navbar-item"><a href="/assign-resources">Assign Resources</a></li>
+            <li class="uk-navbar-item uk-active"><a href="/projects">Add/Edit Projects</a></li>
+            <li class="uk-navbar-item"><a href="/resources">Edit Staff</a></li>
+            <div uk-dropdown>
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="uk-navbar-item"><a href="/resources">Resources</a></li>
+                <li class="uk-navbar-item"><a href="/client-leads">Client Leads</a></li>
+            </ul>
+          </div>
+        </ul>
+    </div>
+  </nav>
+
+  <main class="uk-flex uk-margin-top uk-flex-center uk-flex-column">
+    <div class="uk-width-1-1">
+      <h2 class="uk-heading-line uk-text-center">
+      <span>Assign Resources to <%= project.client_name %></span>
+    </h2>
+  </div>
+
+  <div class="uk-grid-small uk-flex-around uk-margin-right uk-margin-left uk-margin-bottom" uk-grid>
+    <form action="/assign-resources/week" method="get">
+
+    <% resources.forEach(resource => { %>
+      <p><label class=""><input type="checkbox" name="designers" value="<%= resource.id %>" class="uk-checkbox uk-margin-left"> <%= resource.name %> <span class="uk-text-small uk-text-muted"><%= resource.title %></span></label></p>
+    <% }) %>
+    <label class="uk-form-label uk-text-small uk-text-muted">Choose working week</label>
+    <select class="uk-select uk-margin-small js-date-selector" name="monday">
+      <option id="weekAfter"></option>
+      <option id="nextWeek"></option>
+      <option id="thisMonday"></option>
+    </select>
+
+    <input type="submit" value="next" class="uk-button uk-button-primary uk-margin-top">
+    <a href="/assign-resources" class="uk-margin-left uk-margin-top uk-button-text uk-button">Cancel</a>
+
+  </form>
+  </div>
+</main>
+<!-- <script src="/uikit/js/uikit-icons.min.js"></script> -->
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/moment/moment.min.js"></script>
+<script>
+const monday = moment().day('Monday').format('YYYY-MM-DD');
+const thisMondayOption = document.querySelector('#thisMonday');
+thisMondayOption.textContent = monday;
+
+const nextMonday = moment(monday).add(1, 'week').format('YYYY-MM-DD');
+const nextWeekOption = document.querySelector('#nextWeek');
+nextWeekOption.textContent = nextMonday;
+
+const mondayAfterNext = moment(monday).add(2, 'week').format('YYYY-MM-DD');
+const weekAfterNextOption = document.querySelector('#weekAfter');
+weekAfterNextOption.textContent = mondayAfterNext;
+
+const dateList = document.querySelector('.js-date-selector');
+for (let i = 1; i < 8; i++) {
+  let newOption = document.createElement('option');
+  let newDate = moment(monday).subtract(i, 'weeks').format('YYYY-MM-DD');
+  newOption.textContent = newDate;
+  dateList.appendChild(newOption);
+}
+thisMonday.selected = 'selected';
+</script>
+</body>
+</html>
