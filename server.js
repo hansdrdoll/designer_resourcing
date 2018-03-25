@@ -199,17 +199,20 @@ app.route('/assign-resources/project/:id')
 app.route('/assign-resources/week')
   // show a specific assignment
   .get((request, response) => {
-    const designers = request.query.designers;
-    const startingMonday = request.query.monday;
-    const tues = moment(startingMonday).add(1, 'days').format('YYYY-MM-DD');
-    const wed = moment(startingMonday).add(2, 'days').format('YYYY-MM-DD');
-    const thurs = moment(startingMonday).add(3, 'days').format('YYYY-MM-DD');
-    const fri = moment(startingMonday).add(4, 'days').format('YYYY-MM-DD');
-    const week = [startingMonday, tues, wed, thurs, fri];
-    Assignments.findAllInWeek(week)
+    const resources = request.query.resources;
+    console.log(resources);
+    const monday = request.query.monday;
+    console.log('monday', monday);
+    const project_id = request.query.project_id;
+    console.log('project_id', project_id);
+    // const tues = moment(monday).add(1, 'days').format('YYYY-MM-DD');
+    // const wed = moment(monday).add(2, 'days').format('YYYY-MM-DD');
+    // const thurs = moment(monday).add(3, 'days').format('YYYY-MM-DD');
+    // const fri = moment(monday).add(4, 'days').format('YYYY-MM-DD');
+    // const week = [monday, tues, wed, thurs, fri];
+    Resource.findAny(resources)
       .then(result =>
         response.json(result));
-    // response.send(`great, ${startingMonday}, ${tues} ${wed} ${thurs}, ${fri}`);
   })
   .put((request, response) => {
     // update method

@@ -14,8 +14,8 @@
     <div class="uk-navbar-left">
           <ul class="uk-navbar-nav">
             <li class="uk-navbar-item"><a href="/report">Report</a></li>
-            <li class="uk-navbar-item"><a href="/assign-resources">Assign Resources</a></li>
-            <li class="uk-navbar-item uk-active"><a href="/projects">Add/Edit Projects</a></li>
+            <li class="uk-navbar-item uk-active"><a href="/assign-resources">Assign Resources</a></li>
+            <li class="uk-navbar-item"><a href="/projects">Add/Edit Projects</a></li>
             <li class="uk-navbar-item"><a href="/resources">Edit Staff</a></li>
             <div uk-dropdown>
               <ul class="uk-nav uk-dropdown-nav">
@@ -38,7 +38,7 @@
     <form action="/assign-resources/week" method="get">
 
     <% resources.forEach(resource => { %>
-      <p><label class=""><input type="checkbox" name="designers" value="<%= resource.id %>" class="uk-checkbox uk-margin-left"> <%= resource.name %> <span class="uk-text-small uk-text-muted"><%= resource.title %></span></label></p>
+      <p><label class=""><input type="checkbox" name="resources" value="<%= resource.id %>" class="uk-checkbox uk-margin-left"> <%= resource.name %> <span class="uk-text-small uk-text-muted"><%= resource.title %></span></label></p>
     <% }) %>
     <label class="uk-form-label uk-text-small uk-text-muted">Choose working week</label>
     <select class="uk-select uk-margin-small js-date-selector" name="monday">
@@ -47,6 +47,7 @@
       <option id="thisMonday"></option>
     </select>
 
+    <input type="hidden" value="<%= project.id %>" name="project_id">
     <input type="submit" value="next" class="uk-button uk-button-primary uk-margin-top">
     <a href="/assign-resources" class="uk-margin-left uk-margin-top uk-button-text uk-button">Cancel</a>
 
