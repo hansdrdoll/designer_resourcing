@@ -262,3 +262,6 @@ app.route('/report/:week')
   .delete((request, response) => {
     // delete?
   });
+
+app.route('/api/slack')
+  .post((request, response) => response.send('hooray'));
