@@ -227,18 +227,26 @@ app.route('/assign-resources/week')
 app.route('/report')
   .get((request, response) => {
     // redirect to current week
-    let lastMonday = moment().day('Monday').format('YYYY-MM-DD');
+    const lastMonday = moment().day('Monday').format('YYYY-MM-DD');
     response.redirect(`/report/${lastMonday}`);
-
-  })
-  .post((request, response) => {
-
+})
+  .put((request, response) => {
+    console.log(request.body);
+    Assignments.update(request.body);
+    response.sendStatus(201);
   });
 
 app.route('/report/:week')
   // show a specific assignment
   .get((request, response) => {
-    // week editor
+    const monday = request.params.week;
+    const tues = moment(monday).add(1, 'days').format('YYYY-MM-DD');
+    const wed = moment(monday).add(2, 'days').format('YYYY-MM-DD');
+    const thurs = moment(monday).add(3, 'days').format('YYYY-MM-DD');
+    const fri = moment(monday).add(4, 'days').format('YYYY-MM-DD');
+    const week = [monday, tues, wed, thurs, fri];
+    Assignments.findAllInWeek(week)
+      .then(assignmentData => response.render('report', { assignmentData }));
   })
   .put((request, response) => {
     // update method

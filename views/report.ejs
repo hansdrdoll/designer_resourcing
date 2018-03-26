@@ -13,8 +13,8 @@
   <nav class="uk-navbar-container" uk-navbar>
     <div class="uk-navbar-left">
           <ul class="uk-navbar-nav">
-            <li class="uk-navbar-item"><a href="/report">Report</a></li>
-            <li class="uk-navbar-item uk-active"><a href="/assign-resources">Assign Resources</a></li>
+            <li class="uk-navbar-item uk-active"><a href="/report">Report</a></li>
+            <li class="uk-navbar-item"><a href="/assign-resources">Assign Resources</a></li>
             <li class="uk-navbar-item"><a href="/projects">Add/Edit Projects</a></li>
             <li class="uk-navbar-item"><a href="/resources">Edit Staff</a></li>
             <div uk-dropdown>
@@ -30,18 +30,20 @@
   <main class="uk-flex uk-margin-top uk-flex-center uk-flex-column">
     <div class="uk-width-1-1">
       <h3 class="uk-heading-line uk-text-center">
-      <span>Assign Resources to <%= project.client_name %> <span class="uk-text-muted uk-margin-left"><%= project.name %></span></span>
+      <span class="js-header">Report for week of <%= assignmentData[0].day %>
+        <span class="uk-text-muted uk-margin-left"></span>
+      </span>
     </h3>
 
   </div>
 
-    <form action="/assign-resources" method="post" class="js-form">
+  <form action="/assign-resources?_method=put" method="post" class="js-form">
   <div class="uk-flex uk-flex-column uk-flex-center uk-margin-right uk-margin-left uk-margin-bottom">
 
     <table class="uk-table uk-table-striped uk-table-small uk-table-middle">
       <thead>
       <tr>
-        <td class="uk-width-medium">Resource</td>
+        <td class="uk-width-medium"></td>
         <td class="uk-width-small">Mon</td>
         <td class="uk-width-small">Tue</td>
         <td class="uk-width-small">Wed</td>
@@ -51,29 +53,38 @@
     </tr>
   </thead>
   <tbody>
-      <% resources.forEach(resource => { %>
+    <% const makeRowsByFive = (element, index) => { %>
+      <% if (index % 5 === 0) { %>
+
     <tr>
       <td class="">
-        <span><%= resource.name %></span><br><span class="uk-text-muted uk-text-small"><%= resource.title %></span>
-
+        <span><%= element.resource_name %></span><br>
+        <span class="uk-text-muted uk-text-small">
+          <%= element.client_name %> - <%= element.client_lead %>
+        </span>
       </td>
-          <% week.forEach(day => { %>
-        <td>
+      <td>
+        <input type="text" id ="<%= element.assignment_id %>" value="<%= element.hours %>" class="hours uk-input uk-form-width-xsmall uk-width-1-5">
+      </td>
 
-          <input type="text" id ="<%= day %>,<%= resource.id %>,<%= project.id %>" placeholder="hrs" class="hours uk-input uk-form-width-xsmall uk-width-1-5">
+    <% } else if ((index + 1) % 5 === 0) { %>
 
-        </td>
-          <% }) %>
-        <!-- <td>
-          <input type="text" class="total uk-disabled uk-input uk-form-width-xsmall" id="<%= resource.id %>" value="0">
-        </td> -->
+      <td>
+        <input type="text" id ="<%= element.assignment_id %>" value="<%= element.hours %>" class="hours uk-input uk-form-width-xsmall uk-width-1-5">
+      </td>
     </tr>
-      <% }) %>
+      <% } else { %>
+      <td>
+        <input type="text" id ="<%= element.assignment_id %>" value="<%= element.hours %>" class="hours uk-input uk-form-width-xsmall uk-width-1-5">
+      </td>
+      <% } %>
+    <% } %>
+      <% assignmentData.forEach(makeRowsByFive) %>
     </tbody>
 
   </table>
   <div>
-    <input type="submit" value="Submit" class="uk-button uk-button-primary uk-margin-top js-submit">
+    <input type="submit" value="Update" class="uk-button uk-button-primary uk-margin-top js-submit">
     <a href="/assign-resources" class="uk-margin-left uk-margin-top uk-button-text uk-button">Cancel</a>
   </div>
   </form>
@@ -81,7 +92,7 @@
 <!-- <script src="/uikit/js/uikit-icons.min.js"></script> -->
 <script src="/uikit/js/uikit.min.js"></script>
 <script src="/moment/moment.min.js"></script>
-<script src="/static/scripts/make-assignments.js"></script>
+<script src="/static/scripts/report.js"></script>
 
 </body>
 </html>
