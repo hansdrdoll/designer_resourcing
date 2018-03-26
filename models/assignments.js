@@ -2,8 +2,7 @@ const db = require('../database/connection');
 
 const Assignments = {};
 
-Assignments.findAllInWeek = (week) => {
-  return db.any(`
+Assignments.findAllInWeek = week => db.any(`
     SELECT assignments.id AS assignment_id,
     assignments.resource_id AS resource_id,
     assignments.project_id AS project_id,
@@ -21,9 +20,8 @@ Assignments.findAllInWeek = (week) => {
     JOIN projects ON assignments.project_id = projects.id
     JOIN client_leads On projects.cs_id = client_leads.id
     WHERE assignments.day IN ($1, $2, $3, $4, $5)
-    ORDER BY cs_id, project_id, resource_id, day;
+    ORDER BY resource_id, cs_id, project_id, day;
     `, week);
-};
 
 Assignments.create = (requestArr) => {
   requestArr.forEach((request) => {

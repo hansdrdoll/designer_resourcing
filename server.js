@@ -246,7 +246,15 @@ app.route('/report/:week')
     const fri = moment(monday).add(4, 'days').format('YYYY-MM-DD');
     const week = [monday, tues, wed, thurs, fri];
     Assignments.findAllInWeek(week)
-      .then(assignmentData => response.render('report', { assignmentData }));
+      .then((assignmentData) => {
+        console.log(assignmentData);
+        if (assignmentData[0]) {
+          response.render('report', { assignmentData });
+        } else {
+          const lastMonday = moment(monday).subtract(1, 'weeks').format('YYYY-MM-DD');
+          response.send(`no data for this week. <a href="/assign-resources">Add some</a>, or see <a href="/report/${lastMonday}">last week?</a>`);
+        }
+      });
   })
   .put((request, response) => {
     // update method

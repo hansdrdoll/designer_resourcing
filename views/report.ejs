@@ -62,20 +62,22 @@
         <span class="uk-text-muted uk-text-small">
           <%= element.client_name %> - <%= element.client_lead %>
         </span>
+        <input type="hidden" class="row-identifier" value="<%= element.resource_id %>">
       </td>
       <td>
-        <input type="text" id ="<%= element.assignment_id %>" value="<%= element.hours %>" class="hours uk-input uk-form-width-xsmall uk-width-1-5">
+        <input type="text" id ="<%= element.assignment_id %>" value="<%= element.hours %>" class="row<%= element.resource_id %> hours uk-input uk-form-width-xsmall uk-width-1-5">
       </td>
-
     <% } else if ((index + 1) % 5 === 0) { %>
-
       <td>
-        <input type="text" id ="<%= element.assignment_id %>" value="<%= element.hours %>" class="hours uk-input uk-form-width-xsmall uk-width-1-5">
+        <input type="text" id ="<%= element.assignment_id %>" value="<%= element.hours %>" class="row<%= element.resource_id %> hours uk-input uk-form-width-xsmall uk-width-1-5">
+      </td>
+      <td>
+        <input type="text" class="total<%= element.resource_id %> uk-disabled uk-form-width-xsmall uk-width-1-5 uk-input" value="">
       </td>
     </tr>
       <% } else { %>
       <td>
-        <input type="text" id ="<%= element.assignment_id %>" value="<%= element.hours %>" class="hours uk-input uk-form-width-xsmall uk-width-1-5">
+        <input type="text" id ="<%= element.assignment_id %>" value="<%= element.hours %>" class="row<%= element.resource_id %> hours uk-input uk-form-width-xsmall uk-width-1-5">
       </td>
       <% } %>
     <% } %>
@@ -84,6 +86,7 @@
 
   </table>
   <div>
+    <input type="hidden" id="monday" value="<%= assignmentData[0].day %>">
     <input type="submit" value="Update" class="uk-button uk-button-primary uk-margin-top js-submit">
     <a href="/assign-resources" class="uk-margin-left uk-margin-top uk-button-text uk-button">Cancel</a>
   </div>

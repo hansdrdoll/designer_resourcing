@@ -1,8 +1,50 @@
 console.log('make-assignments connected!')
 
 const allInputFields = document.querySelectorAll('.hours');
+const monday = document.querySelector('#monday').value;
 
 const HourInputs = [];
+
+const rows = document.querySelectorAll('.row-identifier');
+
+const rowIds = [];
+const rowsToIds = rows.forEach(row => rowIds.push(Number(row.value)));
+
+// https://stackoverflow.com/questions/9229645/remove-duplicate-values-from-js-array
+const reduceResourses = rowIds.filter((item, pos) => rowIds.indexOf(item) === pos);
+
+const sumRows = () => {
+  reduceResourses.forEach((resource) => {
+    const cells = document.querySelectorAll(`.row${resource}`);
+    const totalFields = document.querySelectorAll(`.total${resource}`)
+
+    const values = [];
+    cells.forEach((cell) => {
+      values.push(Number(cell.value));
+    });
+    const sum = values.reduce((a, b) => a + b);
+
+    totalFields.forEach(total => total.value = sum);
+
+    if (sum > 40) {
+      totalFields.forEach((total) => {
+        total.classList.remove('uk-form-success');
+        total.classList.add('uk-form-danger');
+      });
+    } else if (sum < 40) {
+      totalFields.forEach((total) => {
+        total.classList.remove('uk-form-danger');
+        total.classList.add('uk-form-success');
+      });
+    } else if (sum === 40) {
+      totalFields.forEach((total) => {
+        total.classList.remove('uk-form-danger');
+        total.classList.remove('uk-form-success');
+      });
+    }
+  });
+};
+
 
 const pushValue = (evt) => {
   const value = evt.target.value;
@@ -18,6 +60,7 @@ const transmuteIds = (element, index) => {
   });
   element.id = index;
   element.addEventListener('blur', pushValue);
+  element.addEventListener('input', sumRows);
 };
 
 allInputFields.forEach(transmuteIds);
@@ -31,13 +74,11 @@ const gatherAllValues = (element, index) => {
   HourInputs[index].hours = value;
 };
 
-const sendIt = (data) => fetch('/report?_method=put', {
+const sendIt = data => fetch('/report?_method=put', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(data),
-  }).then(function(response) {
-  return response;
-});
+}).then(response => response);
 
 const sendRequest = (evt) => {
   evt.preventDefault();
@@ -45,7 +86,9 @@ const sendRequest = (evt) => {
   sendIt(HourInputs)
     .then(response => console.log(response));
 };
-// window.location.href = "/report"
+
 const form = document.querySelector('.js-form');
 
 form.addEventListener('submit', sendRequest);
+
+sumRows();
