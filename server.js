@@ -29,7 +29,7 @@ app.listen(PORT, () => {
 });
 
 app.route('/').get((request, response) => {
-  response.render('index');
+  response.redirect('/projects');
 });
 
 app.route('/resources')
