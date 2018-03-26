@@ -264,4 +264,4 @@ app.route('/report/:week')
   });
 
 app.route('/api/slack')
-  .post((request, response) => response.send('hooray'));
+  .get((request, response) => response.send('hooray'));
