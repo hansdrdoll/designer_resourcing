@@ -2,7 +2,8 @@
 An app for Studio Directors to assign working hours per week to their designers.
 
 ### Description:
-Use this app to assign working hours per day, per week, per project to your creative staff (__resources__). The assignment process is built on the information you feed to the database about your projects, resources, and client leads.
+Use this app to assign working hours per day, per week, per project to your creative staff (*resources*). The assignment process is built on the information you feed to the database about your projects, resources, and client leads.
+
 
 ### Features:
 
@@ -14,14 +15,39 @@ Use this app to assign working hours per day, per week, per project to your crea
 ### Dependencies:
 
 - Vanilla JS
-- Express __including helmet, body-parser, and method-override__
+- Express *including helmet, body-parser, and method-override*
 - EJS
 - PG-Promise
 - Moment JS for date parsing
 - Botkit for Slack Bot
 - UIKit for CSS styling
 
+### Code examples:
+- A method to extract an unknown number of parameters from a SQL Select statement:
+```
+Resource.findAny = (ids) => {
+  const newIds = [];
+  let manySelector = '$1';
+  let i = 1;
+  if (typeof ids !== 'string') {
+    ids.forEach((id) => {
+      newIds.push(Number(id));
+      if (i < ids.length) {
+        i += 1;
+        manySelector = `${manySelector}, $${i}`;
+      }
+    });
+    return db.any(
+      `SELECT * FROM resources WHERE id IN (${manySelector})`,
+      newIds,
+    );
+  }
+  return db.any('SELECT * FROM resources WHERE id = $1', ids);
+};
+```
+
 ### User Stories:
+
 
 ### Planned Future Functionality:
 
