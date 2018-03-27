@@ -38,7 +38,7 @@
     <form action="/assign-resources/week" method="get">
 
     <% resources.forEach(resource => { %>
-      <p><label class=""><input type="checkbox" name="resources" value="<%= resource.id %>" class="uk-checkbox uk-margin-left"> <%= resource.name %> <span class="uk-text-small uk-text-muted"><%= resource.title %></span></label></p>
+      <p><label><input type="checkbox" name="resources" value="<%= resource.id %>"> <%= resource.name %> <span><%= resource.title %></span></label></p>
     <% }) %>
     <label class="uk-form-label uk-text-small uk-text-muted">Choose working week</label>
     <select class="uk-select uk-margin-small js-date-selector" name="monday">

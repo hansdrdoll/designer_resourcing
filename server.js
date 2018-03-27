@@ -209,10 +209,12 @@ app.route('/assign-resources/project/:id')
 app.route('/assign-resources/week')
   // show a specific assignment
   .get((request, response) => {
+    // turn the query string params into sql params
     const reqResources = request.query.resources;
     const monday = request.query.monday;
     const projectId = { id: request.query.project_id };
 
+    // build a week's worth of queries to send to the ejs
     const tues = moment(monday).add(1, 'days').format('YYYY-MM-DD');
     const wed = moment(monday).add(2, 'days').format('YYYY-MM-DD');
     const thurs = moment(monday).add(3, 'days').format('YYYY-MM-DD');
@@ -252,9 +254,11 @@ app.route('/report/:week')
     Assignments.findAllInWeek(week)
       .then((assignmentData) => {
         console.log(assignmentData);
+        // check if data exists
         if (assignmentData[0]) {
           response.render('report', { assignmentData });
         } else {
+          // bad error handling
           const lastMonday = moment(monday).subtract(1, 'weeks').format('YYYY-MM-DD');
           response.send(`no data for this week. <a href="/assign-resources">Add some</a>, or see <a href="/report/${lastMonday}">last week?</a>`);
         }
