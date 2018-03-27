@@ -45,6 +45,4 @@ Assignments.update = (requestArr) => {
   });
 };
 
-
 module.exports = Assignments;
-

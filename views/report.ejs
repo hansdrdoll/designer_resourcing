@@ -30,11 +30,11 @@
   <main class="uk-flex uk-margin-top uk-flex-center uk-flex-column">
     <div class="uk-width-1-1">
       <h3 class="uk-heading-line uk-text-center">
-      <span class="js-header">Report for week of <%= assignmentData[0].day %>
-        <span class="uk-text-muted uk-margin-left"></span>
-      </span>
+        <span class="js-header">
+          <a id="lastWeek" class="uk-link-muted uk-margin-small-right uk-margin-left">last week</a>
+          Report for week of <%= assignmentData[0].day %>
+          <a id="nextWeek" class="uk-link-muted uk-margin-small-left uk-margin-right">next week</a></span>
     </h3>
-
   </div>
 
   <form action="/assign-resources?_method=put" method="post" class="js-form">

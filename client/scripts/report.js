@@ -91,4 +91,15 @@ const form = document.querySelector('.js-form');
 
 form.addEventListener('submit', sendRequest);
 
+const makeLinksForNextAndLastWeek = () => {
+  const lastWeek = moment(monday).subtract(1, 'weeks').format('YYYY-MM-DD');
+  const lastWeekLink = document.querySelector('#lastWeek');
+  lastWeekLink.href = `/report/${lastWeek}`;
+
+  const nextWeek = moment(monday).add(1, 'weeks').format('YYYY-MM-DD');
+  const nextWeekLink = document.querySelector('#nextWeek');
+  nextWeekLink.href = `/report/${nextWeek}`;
+};
+
 sumRows();
+makeLinksForNextAndLastWeek();
