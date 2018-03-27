@@ -34,7 +34,6 @@ Projects.update = (projectData, projectId) =>
   );
 
 Projects.delete = projectId => {
-  console.log(projectId);
   return db.result(
     'UPDATE projects SET archived = true WHERE id = $1',
     Number(projectId.id)

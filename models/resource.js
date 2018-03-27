@@ -32,7 +32,6 @@ Resource.create = resourceData => db.one(
     resourceData.slack_username],
 );
 
-
 Resource.findOne = resourceId => db.one('SELECT * from resources WHERE id = $1', resourceId.id);
 
 Resource.update = (resourceData, resourceId) => db.result(
@@ -48,6 +47,5 @@ Resource.delete = resourceId => db.result(
   'UPDATE resources SET archived = true WHERE id = $1',
   resourceId.id,
 );
-
 
 module.exports = Resource;
