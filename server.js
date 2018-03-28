@@ -29,7 +29,7 @@ app.listen(PORT, () => {
 
 // redirect user to a good starting point until i make a landing page
 app.route('/').get((request, response) => {
-  response.redirect('/projects');
+  response.redirect('/assign-resources');
 });
 
 // this view shows all designers in the database
