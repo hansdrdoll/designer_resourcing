@@ -5,7 +5,7 @@ Demo:
 https://still-thicket-36728.herokuapp.com
 
 ### Description:
-Use this app to assign working hours per day, per week, per project to your creative staff (*resources*). The assignment process is built on the information you feed to the database about your projects, resources, and client leads.
+Use this app to assign working hours per day, per week, per project to your creative staff (resources). The assignment process is built on the information you feed to the database about your projects, resources, and client leads.
 
 
 ### Features:
@@ -26,6 +26,7 @@ Use this app to assign working hours per day, per week, per project to your crea
 - UIKit for CSS styling
 
 ### Code examples:
+
 - A method to extract an unknown number of parameters from a SQL Select statement:
 ```javascript
 Resource.findAny = (ids) => {
@@ -47,6 +48,36 @@ Resource.findAny = (ids) => {
   }
   return db.any('SELECT * FROM resources WHERE id = $1', ids);
 };
+```
+
+- Slackbot to return user schedule, based on botkit
+```javascript
+// tell the user their schedule
+controller.hears('schedule', 'direct_message', function (bot, message) {
+  bot.startConversation(message, function(err, convo) {
+    convo.ask('Sure, what\'s your id number?', function(response, convo) {
+      const id = response.text;
+      db.any(`SELECT to_char(assignments.day, 'FMDay FMMonth FMDD') AS day,
+        assignments.hours,
+        projects.client_name,
+        client_leads.name AS client_lead
+        FROM assignments
+        JOIN resources ON assignments.resource_id = resources.id
+        JOIN projects ON assignments.project_id = projects.id
+        JOIN client_leads On projects.cs_id = client_leads.id
+        WHERE resources.id = $1
+        ORDER BY assignments.day, assignments.project_id;`, id)
+      .then(ass => {
+        if (ass[1]) {
+          for (let i = 0; i < ass.length; i++) {
+            convo.next();
+            convo.say(`On ${ass[i].day}, you're working ${ass[i].hours} hours on ${ass[i].client_name} with ${ass[i].client_lead}`)
+          }
+        }
+      })
+    })
+  })
+})
 ```
 
 ### User Stories:
