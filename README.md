@@ -4,6 +4,9 @@ An app for Studio Directors to assign working hours per week to their designers.
 Demo:
 https://still-thicket-36728.herokuapp.com
 
+Slackbot repo:
+https://git.generalassemb.ly/hans/rossbot - a mirrored version of [Slack's repo](https://github.com/slackapi/easy-peasy-bot) I used as the starting point
+
 ### Description:
 Use this app to assign working hours per day, per week, per project to your creative staff (resources). The assignment process is built on the information you feed to the database about your projects, resources, and client leads.
 
