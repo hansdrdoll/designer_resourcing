@@ -27,7 +27,7 @@ Use this app to assign working hours per day, per week, per project to your crea
 
 ### Code examples:
 - A method to extract an unknown number of parameters from a SQL Select statement:
-```
+```javascript
 Resource.findAny = (ids) => {
   const newIds = [];
   let manySelector = '$1';

@@ -15,6 +15,7 @@ ClientLeads.findOne = (clientId) => {
 };
 
 ClientLeads.update = (clientInfo, clientId) => {
+  console.log(clientInfo, clientId)
   return db.one('UPDATE client_leads SET name = $1, slack_username = $2 WHERE id = $3', [clientInfo.name, clientInfo.slack_username, clientId.id]);
 };
 
