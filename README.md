@@ -96,6 +96,12 @@ meetings.
 - As a client lead, I want to see how my time requests impact my project budget, so I can plan based on more accurate projections.
 - As a financial director, I want my studio director and client leads to include the budget in their request considerations, so that we don't wait until everyone puts in their timesheets to realize we're over budget.
 
+### Wireframes
+
+![assign-resources](https://git.generalassemb.ly/storage/user/9428/files/3b5ea71c-3759-11e8-949e-949efcfd87fe)
+![create-resource](https://git.generalassemb.ly/storage/user/9428/files/3b83a6a2-3759-11e8-85a0-28744d21a09e)
+![report](https://git.generalassemb.ly/storage/user/9428/files/3bada0ce-3759-11e8-9311-e51db9b8a3f3)
+
 ### Planned Future Functionality:
 
 - More robust error handling
