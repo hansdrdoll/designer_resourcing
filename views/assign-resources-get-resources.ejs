@@ -47,7 +47,7 @@
       <option id="thisMonday"></option>
     </select>
 
-    <input type="hidden" value="<% project.id %>" name="project_id">
+    <input type="hidden" value="<%= project.id %>" name="project_id">
     <input type="submit" value="next" class="uk-button uk-button-primary uk-margin-top">
     <a href="/assign-resources" class="uk-margin-left uk-margin-top uk-button-text uk-button">Cancel</a>
 
@@ -68,7 +68,7 @@ nextWeekOption.textContent = nextMonday;
 
 const mondayAfterNext = moment(monday).add(2, 'week').format('YYYY-MM-DD');
 const weekAfterNextOption = document.querySelector('#weekAfter');
-weekAfterNextOption.textContent = mondayAfterNext;
+weekAfterNextOption.textContent = mondayAfterNext;  
 
 const dateList = document.querySelector('.js-date-selector');
 for (let i = 1; i < 8; i++) {
@@ -77,7 +77,7 @@ for (let i = 1; i < 8; i++) {
   newOption.textContent = newDate;
   dateList.appendChild(newOption);
 }
-nextMonday.selected = 'selected';
+thisMondayOption.selected = 'selected';
 </script>
 </body>
 </html>

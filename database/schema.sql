@@ -1,6 +1,6 @@
-CREATE DATABASE designer_resourcing;
+-- CREATE DATABASE designer_resourcing;
 
-\c designer_resourcing;
+-- \c designer_resourcing;
 
 DROP TABLE resources CASCADE;
 DROP TABLE client_leads CASCADE;

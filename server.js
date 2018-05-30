@@ -7,6 +7,7 @@ const ClientLeads = require('./models/client-leads');
 const Projects = require('./models/projects');
 const Assignments = require('./models/assignments');
 const moment = require('moment');
+const path = require('path');
 
 // const session = require('express-session');
 
@@ -17,9 +18,9 @@ app.use(helmet());
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/static', express.static(__dirname + '/client'));
-app.use('/uikit', express.static(__dirname + '/node_modules/uikit/dist/'));
-app.use('/moment', express.static(__dirname + '/node_modules/moment/min/'));
+app.use('/static', express.static(path.join(__dirname, '/client')));
+app.use('/uikit', express.static(path.join(__dirname, '/node_modules/uikit/dist/')));
+app.use('/moment', express.static(path.join(__dirname, '/node_modules/moment/min/')));
 
 app.set('view engine', 'ejs');
 
@@ -114,10 +115,10 @@ app
             response.render('client-lead', { clientLeads, clientLead })));
   })
   .put((request, response) => {
-    console.log('you got me')
+    console.log('you got me');
     const clientId = { id: request.params.id };
     const clientInfo = request.body;
-    console.log(clientInfo)
+    console.log(clientInfo);
     ClientLeads.update(clientInfo, clientId)
       .then(ClientLeads.findOne(clientId)
         .then(clientLead =>
@@ -177,7 +178,8 @@ app.route('/projects/:id')
             .then(clientLeads =>
               Projects.findOne(projectId)
                 .then(thisProject =>
-                  response.render('project', { projects, clientLeads, thisProject })))));
+                  response.render('project', { projects, clientLeads, thisProject })))))
+      .catch(console.log('ugh'));
   })
   .delete((request, response) => {
     const projectId = { id: request.params.id };
@@ -212,8 +214,7 @@ app.route('/assign-resources/week')
   // show a specific assignment
   .get((request, response) => {
     // turn the query string params into sql params
-    const reqResources = request.query.resources;
-    const monday = request.query.monday;
+    const { monday, designers } = request.query;
     const projectId = { id: request.query.project_id };
 
     // build a week's worth of queries to send to the ejs
@@ -223,7 +224,7 @@ app.route('/assign-resources/week')
     const fri = moment(monday).add(4, 'days').format('YYYY-MM-DD');
     const week = [monday, tues, wed, thurs, fri];
 
-    Resource.findAny(reqResources)
+    Resource.findAny(designers)
       .then(resources =>
         Projects.findOne(projectId)
           .then(project =>
@@ -238,7 +239,6 @@ app.route('/report')
     response.redirect(`/report/${lastMonday}`);
   })
   .put((request, response) => {
-    console.log(request.body);
     Assignments.update(request.body);
     response.sendStatus(201);
   });

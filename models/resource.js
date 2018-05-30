@@ -9,7 +9,7 @@ Resource.findAny = (ids) => {
   let manySelector = '$1';
   let i = 1;
   if (typeof ids !== 'string') {
-    ids.forEach((id) => {
+    ids.map((id) => {
       newIds.push(Number(id));
       if (i < ids.length) {
         i += 1;
@@ -18,7 +18,7 @@ Resource.findAny = (ids) => {
     });
     return db.any(
       `SELECT * FROM resources WHERE id IN (${manySelector})`,
-      newIds,
+      ids,
     );
   }
   return db.any('SELECT * FROM resources WHERE id = $1', ids);

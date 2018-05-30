@@ -13,6 +13,7 @@
   "author": "hans kirkendoll",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "botkit": "^0.6.12",
     "debug": "^3.1.0",
@@ -25,6 +26,7 @@
     "method-override": "^2.3.10",
     "moment": "^2.21.0",
     "npm": "^5.8.0",
+    "pg-monitor": "^1.0.0",
     "pg-promise": "^8.2.2",
     "uikit": "^3.0.0-beta.40"
   },
