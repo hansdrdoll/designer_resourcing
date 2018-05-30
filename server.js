@@ -115,10 +115,8 @@ app
             response.render('client-lead', { clientLeads, clientLead })));
   })
   .put((request, response) => {
-    console.log('you got me');
     const clientId = { id: request.params.id };
     const clientInfo = request.body;
-    console.log(clientInfo);
     ClientLeads.update(clientInfo, clientId)
       .then(ClientLeads.findOne(clientId)
         .then(clientLead =>
@@ -255,7 +253,6 @@ app.route('/report/:week')
     const week = [monday, tues, wed, thurs, fri];
     Assignments.findAllInWeek(week)
       .then((assignmentData) => {
-        console.log(assignmentData);
         // check if data exists
         if (assignmentData[0]) {
           response.render('report', { assignmentData });
